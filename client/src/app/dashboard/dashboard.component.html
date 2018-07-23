@@ -1,0 +1,115 @@
+<div class="container" fxLayout="column" fxLayoutAlign="space-around start">
+  <div class="container" fxLayout="row" fxFlexOffset="10px">
+    <mat-chip-list>
+      <mat-chip *ngFor="let socket of sockets" (removed)="closeSocket(socket)">
+        {{socket}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <div class="container" fxLayout="row">
+    <div fxFlex="50px"></div>
+    <div fxFlex="300px">
+      <mat-form-field fxFlex="290px">
+        <mat-select placeholder="Asset" [(value)]="asset" (selectionChange)="getTradingPairs(asset)">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let asset of assets" [value]="asset.symbol">
+            <img with="16" height="16" src="../../assets/images/{{asset.logo}}" *ngIf="asset.logo != ''"> {{asset.name}} : {{asset.balance.free}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100px">
+      <button mat-raised-button color="primary" style="margin-top: 10px;">Reload balance</button>
+    </div>
+  </div>
+
+  <div class="container" fxLayout="row" *ngIf="asset">
+    <div fxFlex="50px"></div>
+    <div fxFlex="300px">
+      <mat-form-field fxFlex="290px">
+        <mat-select placeholder="Trading pair" [(value)]="tradingpair" (selectionChange)="setTradingPair(tradingpair)">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let p of pairs" [value]="p.pair">
+            {{p.pair}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="container" fxLayout="row" *ngIf="tradingpair">
+    <div fxFlex="50px"></div>
+    <div fxFlex="300px">
+      <mat-form-field fxFlex="290px">
+        <input matInput placeholder="Current price" type="number" disabled [(value)]="price">
+        <span matSuffix>{{currency}}</span>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="container" fxLayout="row" *ngIf="tradingpair">
+    <div fxFlex="50px"></div>
+    <div fxFlex="150px">
+      <mat-form-field fxFlex="140px">
+        <input matInput placeholder="Stop distance" type="number" [(ngModel)]="stopDistance" (ngModelChange)="updateStopDistance(stopDistance, price)">
+        <span matSuffix>%</span>
+      </mat-form-field>
+    </div>
+    <div fxFlex="150px">
+      <mat-form-field fxFlex="140px">
+        <input matInput type="number" disabled [(ngModel)]="stopDistancePrice">
+        <span matSuffix>{{currency}}</span>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="container" fxLayout="row" *ngIf="tradingpair">
+    <div fxFlex="50px"></div>
+    <div fxFlex="150px">
+      <mat-form-field fxFlex="140px">
+        <input matInput placeholder="Limit distance" type="number" [(ngModel)]="limitDistance" (ngModelChange)="updateLimitDistance(limitDistance, price)">
+        <span matSuffix>%</span>
+      </mat-form-field>
+    </div>
+    <div fxFlex="150px">
+      <mat-form-field fxFlex="140px">
+        <input matInput type="number" disabled [(ngModel)]="limitDistancePrice">
+        <span matSuffix>{{currency}}</span>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="container" fxLayout="row" *ngIf="tradingpair">
+    <div fxFlex="50px"></div>
+    <div fxFlex="150px">
+      <mat-form-field fxFlex="140px">
+        <input matInput placeholder="Trade amount" type="number" [(ngModel)]="tradeAmount" (ngModelChange)="updateTradeAmount(tradeAmount, price)">
+        <span matSuffix>{{asset}}</span>
+      </mat-form-field>
+    </div>
+    <div fxFlex="150px">
+      <mat-form-field fxFlex="140px">
+        <input matInput type="number" disabled [(ngModel)]="tradeAmountPrice">
+        <span matSuffix>{{currency}}</span>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="container" fxLayout="row" *ngIf="tradingpair">
+    <div fxFlex="50px"></div>
+    <div fxFlex="150px">
+      <mat-form-field fxFlex="140px">
+        <input matInput placeholder="Laziness ratio" type="number" [(ngModel)]="laziness" (ngModelChange)="updateLaziness(laziness, price)">
+        <span matSuffix>%</span>
+      </mat-form-field>
+    </div>
+    <div fxFlex="150px">
+      <mat-form-field fxFlex="140px">
+        <input matInput type="number" disabled [(ngModel)]="lazinessPrice">
+        <span matSuffix>{{currency}}</span>
+      </mat-form-field>
+    </div>
+  </div>
+</div>

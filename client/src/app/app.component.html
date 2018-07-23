@@ -1,0 +1,23 @@
+<div fxLayout="column" fxFlex>
+    <mat-toolbar color="primary">
+      <div>
+        <a routerLink="/">
+          Trailing Trader
+        </a>
+      </div>
+      <div fxFlex fxLayout fxLayoutAlign="flex-end"  fxHide.xs>
+        <ul fxLayout fxLayoutGap="20px" class="navigation-items">
+          <li>
+            <a
+              routerLink="/">
+              <mat-icon class="icon">home</mat-icon>
+              <span class="label">&nbsp;Home</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </mat-toolbar>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+</div>
